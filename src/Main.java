@@ -7,21 +7,22 @@ public class Main {
         StepTracker step = new StepTracker();
         Converter converter = new Converter();
 
+        outer: // Лучше способа зациклить не придумал
         while (true) {
             printMenu();
             int userInput = scanner.nextInt();
             if (userInput == 1) {
-                System.out.println("Введите номер месяца");
+                System.out.println("Введите номер месяца от 0 до 11");
                 int month = scanner.nextInt();
                 if (month < 0 || month >= 12) {
-                    System.out.println("Вы ввели некорректное значение месяцев");
-                    break;
+                    System.out.println("Вы ввели некорректное значение месяца");
+                    continue outer;
                 }
-                System.out.println("Введите номер дня");
+                System.out.println("Введите номер дня от 0 до 29");
                 int day = scanner.nextInt();
-                if (day < 1 || day > 30) {
+                if (day < 0 || day >= 30) {
                     System.out.println("Вы ввели некорретное значение дней");
-                    break;
+                    continue outer;
                 }
                 System.out.println("Введите количество шагов");
                 int stepsPerDay = scanner.nextInt();
@@ -31,22 +32,20 @@ public class Main {
                     step.saveStepsByDay(month, day, stepsPerDay);
                 }
             } else if (userInput == 2) {
-                System.out.println("Введите номер месяца, за который хотите получить статистику");
+                System.out.println("Введите номер месяца, за который хотите получить статистику от 1 до 12");
                 int month = scanner.nextInt();
-                step.showStatisticForMonth(month);
-                double stepsToKM = converter.convertSteps(step, month);
-                System.out.println("В километрах вы прошли " + stepsToKM);
-                double stepsToCal = converter.convertStepsToCall(step, month);
-                System.out.println("Вы сожгли " + stepsToCal + " килокалорий");
-                int stepsBestSeries = converter.maxSeries(step, month);
-                System.out.println("Ваша лучшая серия " + stepsBestSeries);
+                if (month < 0 || month >= 12) {
+                    System.out.println("Вы ввели некорректное значение месяцев");
+                    break;
+                }
+                step.showStatisticForMonth(month, converter, step);
             } else if (userInput == 3) {
-                System.out.println("Введите цель по количеству шагов в день");
-                int PurposeStepsDay = scanner.nextInt();
-                step.stepsInDay(PurposeStepsDay);
+                step.stepsInDay();
             } else if (userInput == 0) {
                 System.out.println("Программа завершена");
                 return;
+            } else {
+                System.out.println("Извините, такой команды пок что нет.");
             }
         }
     }
@@ -58,8 +57,6 @@ public class Main {
         System.out.println("3 - Изменить цель по количеству шагов в день");
         System.out.println("0 - Выйти из приложения");
     }
-
-
 }
 
 

@@ -2,36 +2,37 @@
 
 public class Converter {
 
-    public double convertSteps(StepTracker step, int month) {
-        int sum = 0;
+    public void convertSteps(StepTracker step, int month) {
+        double sum = 0;
         for (int i = 1; i <= 30; i++) {
             sum += step.monthToData[month].days[i - 1];
         }
-        return (sum * 75) / 1000;
+        System.out.println("Вы прошли " + ((sum * 75) / 100000) + " километров");
     }
 
-    public double convertStepsToCall(StepTracker step, int month) {
-        int sum = 0;
+    public void convertStepsToCall(StepTracker step, int month) {
+        double sum = 0;
         for (int i = 1; i <= 30; i++) {
             sum += step.monthToData[month].days[i - 1];
         }
-        return (sum * 50) / 1000;
+        System.out.println("Вы сожгли " + ((sum * 50) / 1000) + " калорий");
     }
 
-    public int maxSeries(StepTracker step, int month) {
+    public void maxSeries(StepTracker step, int month) {
         int seria = 0;
         int bestSeries = 0;
-        for (int i = 1; i <= 30; i++) {
-            if (step.monthToData[month].days[i - 1] >= step.stepsTargetPerDay) {
+        for (int i = 0; i < step.monthToData[month].days.length; i++) {
+            if (step.monthToData[month].days[i] >= step.stepsTargetPerDay) {
                 seria++;
-            } else if (step.monthToData[month].days[i - 1] < step.stepsTargetPerDay) {
-                if (seria >= bestSeries) {
+                if (bestSeries < seria) {
                     bestSeries = seria;
                 }
+            } else {
                 seria = 0;
             }
+
         }
-        return bestSeries;
+        System.out.println("Ваша лучшая серия " + bestSeries);
     }
 }
 
