@@ -39,7 +39,7 @@ public class StepTracker {
             }
 
         }
-        int averageSteps = max / 30;
+        int averageSteps = sum / 30;
         System.out.println(" ");
         System.out.println("Всего шагов за месяц " + sum);
         System.out.println("Максимальное количество шагов " + max);

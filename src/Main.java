@@ -7,7 +7,7 @@ public class Main {
         StepTracker step = new StepTracker();
         Converter converter = new Converter();
 
-        outer: // Лучше способа зациклить не придумал
+        outer:
         while (true) {
             printMenu();
             int userInput = scanner.nextInt();
@@ -32,11 +32,11 @@ public class Main {
                     step.saveStepsByDay(month, day, stepsPerDay);
                 }
             } else if (userInput == 2) {
-                System.out.println("Введите номер месяца, за который хотите получить статистику от 1 до 12");
+                System.out.println("Введите номер месяца, за который хотите получить статистику от 0 до 11");
                 int month = scanner.nextInt();
                 if (month < 0 || month >= 12) {
-                    System.out.println("Вы ввели некорректное значение месяцев");
-                    break;
+                    System.out.println("Вы ввели некорректное значение месяца");
+                    continue outer;
                 }
                 step.showStatisticForMonth(month, converter, step);
             } else if (userInput == 3) {
